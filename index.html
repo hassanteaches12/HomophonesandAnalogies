@@ -1,276 +1,367 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>✨ Frosty Grammar Challenge — Homophones & Analogies!</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>✨ Homophones & Analogies Challenge!</title>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com"/>
 <style>
-    body {
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #dff9fb, #c7ecee);
-        color: #2f3640;
-        margin: 0;
-        padding: 0;
-    }
-    header {
-        background: #74b9ff;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 1.6em;
-        letter-spacing: 1px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .container {
-        max-width: 850px;
-        background: white;
-        margin: 40px auto;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-        text-align: center;
-        color: #0984e3;
-    }
-    .student-info {
-        margin-bottom: 25px;
-        background: #f1f2f6;
-        padding: 15px;
-        border-radius: 8px;
-    }
-    .student-info input {
-        width: 48%;
-        padding: 8px;
-        margin: 5px 1%;
-        border: 1px solid #dcdde1;
-        border-radius: 6px;
-    }
-    .question {
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
-    .options label {
-        display: block;
-        margin: 5px 0;
-        padding: 8px;
-        border-radius: 6px;
-        background: #f1f2f6;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-    .options label:hover {
-        background: #dfe6e9;
-    }
-    button {
-        background: #0984e3;
-        color: white;
-        border: none;
-        padding: 12px 25px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 1em;
-        margin-top: 15px;
-    }
-    button:hover {
-        background: #74b9ff;
-    }
-    #result {
-        display: none;
-        margin-top: 30px;
-        padding: 20px;
-        border-radius: 10px;
-        background: #dfe6e9;
-        font-weight: bold;
-        text-align: center;
-        font-size: 1.2em;
-    }
-    #pdfBtn {
-        display: none;
-        background: #6c5ce7;
-        margin-left: 10px;
-    }
+  :root{
+    --bg1:#eaf6ff;
+    --bg2:#f3fbff;
+    --ice:#d9f0ff;
+    --ink:#07314a;
+    --muted:#54707f;
+    --accent:#5fb3ff;
+    --btn-grad: linear-gradient(90deg,#9fd6ff,#7fc7ff);
+    --card-shadow: 0 18px 40px rgba(6,30,44,0.06);
+    --glass: rgba(255,255,255,0.85);
+    --font-sans: system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:radial-gradient(circle at 10% 10%, #f6fcff, transparent 10%), linear-gradient(180deg,var(--bg1),var(--bg2));font-family:var(--font-sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .scene{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px;position:relative;overflow:hidden}
+  .snow {position:fixed;left:0;top:0;pointer-events:none;width:100%;height:100%;z-index:0}
+  .wrap{width:96%;max-width:980px;margin:0 auto;position:relative;z-index:2}
+  .header{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+  .logo{width:84px;height:84px;border-radius:14px;background:linear-gradient(180deg,#fff,#e8f7ff);display:flex;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,0.04);box-shadow:var(--card-shadow)}
+  .header h1{margin:0;font-size:22px}
+  .header p{margin:0;color:var(--muted);font-size:13px}
+  .card{background:var(--glass);backdrop-filter: blur(6px);border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.6);box-shadow:var(--card-shadow)}
+  .form-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+  label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;color:var(--ink)}
+  input[type="text"], select{padding:10px 12px;border-radius:10px;border:1px solid rgba(7,49,74,0.07);background:#fff;font-size:15px;min-width:140px}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px}
+  .btn{background:var(--btn-grad);border-radius:10px;padding:10px 16px;border:1px solid rgba(7,49,74,0.06);font-weight:800;color:#05324a;cursor:pointer;box-shadow:0 8px 20px rgba(47,119,179,0.06)}
+  .btn.secondary{background:#fff;border:1px solid rgba(7,49,74,0.04)}
+  .btn:active{transform:translateY(1px)}
+  /* quiz */
+  #quiz-container{display:none;margin-top:16px}
+  #quiz{margin-top:12px}
+  .q-card{margin-bottom:12px;padding:14px;border-radius:12px;background:linear-gradient(180deg,#ffffff,#f2fbff);border:1px solid rgba(7,49,74,0.04);box-shadow:0 8px 26px rgba(6,30,44,0.04)}
+  .q-top{display:flex;gap:12px;align-items:center}
+  .q-num{background:linear-gradient(180deg,#fff,#e8f7ff);padding:8px 10px;border-radius:8px;font-weight:900;color:var(--accent);min-width:46px;text-align:center;box-shadow:0 6px 18px rgba(95,179,255,0.08)}
+  .q-text{font-weight:800;color:var(--ink)}
+  .opts{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .opt{padding:10px 14px;border-radius:999px;background:linear-gradient(180deg,#fbfeff,#f3fbff);cursor:pointer;border:1px solid rgba(7,49,74,0.04);font-weight:800;min-width:120px;text-align:center;transition:transform .12s, box-shadow .12s}
+  .opt:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(7,49,74,0.06)}
+  .opt.selected{background:linear-gradient(90deg,#dff4ff,#bfeeff);border-color:rgba(95,179,255,0.25);box-shadow:0 10px 26px rgba(95,179,255,0.06)}
+  .opt.correct{background:linear-gradient(90deg,#e6fff2,#f0fff8);border-color:rgba(46,167,102,0.12);color:#0b7b4c}
+  .opt.wrong{background:linear-gradient(90deg,#fff1f1,#fff6f6);border-color:rgba(224,87,78,0.12);color:#a33}
+  .tf .opt{min-width:150px;padding:12px 18px}
+  .quiz-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+  .progress{flex:1;margin-right:10px;background:#e7f6ff;border-radius:999px;height:12px;overflow:hidden}
+  .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#bfeeff,#7fc7ff);transition:width .6s}
+  #results-container{display:none;margin-top:18px}
+  .results-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .score{font-size:20px;font-weight:900;color:#0b5b82;margin-top:10px}
+  .badge{display:inline-block;padding:12px 16px;border-radius:12px;background:linear-gradient(180deg,#fff,#f4fbff);box-shadow:0 12px 34px rgba(94,151,185,0.06);text-align:center}
+  .badge .emoji{font-size:36px}
+  .badge .title{font-weight:900;margin-top:6px}
+  .small{font-size:12px;color:var(--muted)}
+  @media (max-width:720px){
+    .opt{min-width:unset;flex:1 1 calc(50% - 12px)}
+  }
+  .footer-note{margin-top:10px;font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
+  <div class="scene">
+    <canvas class="snow" id="snow-canvas"></canvas>
+    <div class="wrap">
+      <div class="header">
+        <div class="logo card" aria-hidden="true">
+          <svg width="58" height="58" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="10" width="52" height="42" rx="8" fill="#f7feff" stroke="#d3f0ff" stroke-width="1.6"/>
+            <path d="M16 22c6-3 24-6 32 0" stroke="#99d6ff" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <circle cx="48" cy="22" r="4" fill="#c8f0ff"/>
+          </svg>
+        </div>
+        <div>
+          <h1>✨ Homophones & Analogies Challenge!</h1>
+          <p class="small">Select the correct option for each question. Download your result card when finished.</p>
+        </div>
+      </div>
 
-<header>✨ Frosty Grammar Challenge — Homophones & Analogies!</header>
+      <!-- student info -->
+      <section id="student-info-container" class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+          <div>
+            <h2 style="margin:0">☃️ Student Details</h2>
+            <div class="hint">Fill the details below, then start the quiz.</div>
+            <ol style="margin:8px 0 0 18px">
+              <li>Choose one option per question.</li>
+              <li>Change answers anytime before submitting.</li>
+              <li>Click <strong>Submit Answers</strong> to view score and review.</li>
+              <li>Download a PDF result card afterwards.</li>
+            </ol>
+          </div>
+          <div style="text-align:right;color:var(--muted)"><strong>10</strong> questions • Elementary</div>
+        </div>
 
-<div class="container">
-<h2>📘 Student Quiz</h2>
+        <form id="student-info-form" style="margin-top:14px">
+          <div class="form-row">
+            <div>
+              <label for="name">🧭 Full Name</label>
+              <input id="name" type="text" required placeholder="e.g. Ali Khan">
+            </div>
+            <div>
+              <label for="roll">🎫 Roll Number</label>
+              <input id="roll" type="text" required placeholder="e.g. 12">
+            </div>
+            <div>
+              <label for="class">🏷 Class</label>
+              <select id="class" required>
+                <option value="">Select</option>
+                <option value="Grade 4">Grade 4</option>
+                <option value="Grade 5">Grade 5</option>
+                <option value="Grade 6">Grade 6</option>
+              </select>
+            </div>
+            <div>
+              <label for="section">🏷 Section</label>
+              <input id="section" type="text" required placeholder="e.g. A">
+            </div>
+          </div>
 
-<div class="student-info">
-    <label><b>Student Name:</b></label>
-    <input type="text" id="studentName" placeholder="Enter your full name" required>
-    <label><b>Class:</b></label>
-    <input type="text" id="studentClass" placeholder="e.g. Grade 5" required>
-    <label><b>Teacher:</b></label>
-    <input type="text" id="teacherName" placeholder="e.g. Mr. Hassan Abbas">
-</div>
+          <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px">
+            <button type="button" class="btn secondary" onclick="previewTheme()">Preview Theme</button>
+            <button type="submit" class="btn" id="begin-btn">Start Quiz — Open the Snow Scroll ❄️</button>
+          </div>
+        </form>
+      </section>
 
-<form id="quizForm">
+      <!-- quiz -->
+      <section id="quiz-container">
+        <div class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <div>
+              <h2 style="margin:0">📘 Quiz: Homophones & Analogies</h2>
+              <div class="hint">Select one option per question.</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="text-align:right">
+                <div id="live-q" style="font-weight:900">Question 1 / 10</div>
+                <div class="hint">Progress</div>
+              </div>
+              <div style="width:180px">
+                <div class="progress"><i id="progress-bar"></i></div>
+              </div>
+            </div>
+          </div>
 
-<!-- Question 1 -->
-<div class="question">
-1. Which sentence uses the correct homophone?<br>
-<div class="options">
-<label><input type="radio" name="q1" value="A"> A. They're going to the park.</label>
-<label><input type="radio" name="q1" value="B"> B. Their going to the park.</label>
-<label><input type="radio" name="q1" value="C"> C. There going to the park.</label>
-</div>
-</div>
+          <div id="quiz"></div>
 
-<!-- Question 2 -->
-<div class="question">
-2. Choose the correct word: I could not _____ the pain any longer.<br>
-<div class="options">
-<label><input type="radio" name="q2" value="A"> A. bare</label>
-<label><input type="radio" name="q2" value="B"> B. bear</label>
-</div>
-</div>
+          <div class="quiz-actions">
+            <div style="display:flex;gap:8px">
+              <button class="btn secondary" id="prev-btn" onclick="prevQuestion()" disabled>← Previous</button>
+              <button class="btn secondary" id="next-btn" onclick="nextQuestion()">Next →</button>
+            </div>
 
-<!-- Question 3 -->
-<div class="question">
-3. Identify the correct analogy: Cold is to Ice as Hot is to _____.<br>
-<div class="options">
-<label><input type="radio" name="q3" value="A"> A. Fire</label>
-<label><input type="radio" name="q3" value="B"> B. Warm</label>
-<label><input type="radio" name="q3" value="C"> C. Summer</label>
-</div>
-</div>
+            <div style="display:flex;gap:10px;align-items:center">
+              <div class="hint">When ready</div>
+              <button id="submit-btn" class="btn" onclick="submitQuiz()">Submit Answers ❄️</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<!-- Question 4 -->
-<div class="question">
-4. Which pair of words are homophones?<br>
-<div class="options">
-<label><input type="radio" name="q4" value="A"> A. Flour – Flower</label>
-<label><input type="radio" name="q4" value="B"> B. Blue – Blew</label>
-<label><input type="radio" name="q4" value="C"> C. Both A and B</label>
-</div>
-</div>
+      <!-- results -->
+      <section id="results-container">
+        <div class="card">
+          <div class="results-head">
+            <div>
+              <h2 style="margin:0">🎉 Quiz Complete!</h2>
+              <div class="hint">Here is your result card.</div>
+            </div>
+            <div style="text-align:right">
+              <div id="name-display" style="font-weight:900"></div>
+              <div id="meta-display" class="small"></div>
+            </div>
+          </div>
 
-<!-- Question 5 -->
-<div class="question">
-5. Choose the best analogy: Book is to Reading as Fork is to _____.<br>
-<div class="options">
-<label><input type="radio" name="q5" value="A"> A. Drawing</label>
-<label><input type="radio" name="q5" value="B"> B. Writing</label>
-<label><input type="radio" name="q5" value="C"> C. Eating</label>
-</div>
-</div>
+          <div class="score" id="score-display"></div>
+          <div class="badge" id="badge-display">
+            <div class="emoji">🏆</div>
+            <div class="title"></div>
+          </div>
 
-<!-- Question 6 -->
-<div class="question">
-6. Fill in the blank: The wind will _____ the leaves away.<br>
-<div class="options">
-<label><input type="radio" name="q6" value="A"> A. blew</label>
-<label><input type="radio" name="q6" value="B"> B. blue</label>
-</div>
-</div>
+          <div id="answers-review" style="margin-top:14px"></div>
 
-<!-- Question 7 -->
-<div class="question">
-7. Which analogy is correct?<br>
-<div class="options">
-<label><input type="radio" name="q7" value="A"> A. Teacher : School :: Doctor : Hospital</label>
-<label><input type="radio" name="q7" value="B"> B. Teacher : Books :: Doctor : School</label>
-</div>
-</div>
+          <div style="margin-top:16px;text-align:right">
+            <button class="btn" onclick="downloadPDF()">Download Result (PDF)</button>
+          </div>
+        </div>
+      </section>
 
-<!-- Question 8 -->
-<div class="question">
-8. Select the correct homophone: Please _____ quietly during the show.<br>
-<div class="options">
-<label><input type="radio" name="q8" value="A"> A. sit</label>
-<label><input type="radio" name="q8" value="B"> B. seat</label>
-</div>
-</div>
-
-<!-- Question 9 -->
-<div class="question">
-9. Choose the correct analogy: Eye is to See as Ear is to _____.<br>
-<div class="options">
-<label><input type="radio" name="q9" value="A"> A. Hear</label>
-<label><input type="radio" name="q9" value="B"> B. Listen</label>
-<label><input type="radio" name="q9" value="C"> C. Sound</label>
-</div>
-</div>
-
-<!-- Question 10 -->
-<div class="question">
-10. Pick the correct homophone: I will _____ the gift to my friend.<br>
-<div class="options">
-<label><input type="radio" name="q10" value="A"> A. sent</label>
-<label><input type="radio" name="q10" value="B"> B. scent</label>
-<label><input type="radio" name="q10" value="C"> C. send</label>
-</div>
-</div>
-
-<!-- Question 11 -->
-<div class="question">
-11. Choose the correct analogy: Pen is to Writer as Brush is to _____.<br>
-<div class="options">
-<label><input type="radio" name="q11" value="A"> A. Artist</label>
-<label><input type="radio" name="q11" value="B"> B. Painter</label>
-<label><input type="radio" name="q11" value="C"> C. Designer</label>
-</div>
-</div>
-
-<button type="button" onclick="calculateScore()">Submit Quiz</button>
-<button type="button" id="pdfBtn" onclick="downloadPDF()">Download Results (PDF)</button>
-
-<div id="result"></div>
-
-</form>
-</div>
+      <div class="footer-note">
+        © 2025 • Homophones & Analogies Challenge • Created by Hassan Abbas
+      </div>
+    </div>
+  </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-const correctAnswers = {
-    q1: "A", q2: "B", q3: "A", q4: "C", q5: "C", q6: "A",
-    q7: "A", q8: "A", q9: "A", q10: "C", q11: "B"
-};
+const questions = [
+  {
+    q:"1. Choose the correct homophone: I need to ___ a break from work.",
+    opts:["take","tale","teak","tick"],
+    ans:0
+  },
+  {
+    q:"2. Identify the correct word: She read a wonderful ___ before bed.",
+    opts:["tale","tail","tale","till"],
+    ans:0
+  },
+  {
+    q:"3. Analogy: Finger is to Hand as Toe is to ___",
+    opts:["foot","head","leg","knee"],
+    ans:0
+  },
+  {
+    q:"4. Analogy: Book is to Reading as Knife is to ___",
+    opts:["cutting","writing","eating","drawing"],
+    ans:0
+  },
+  {
+    q:"5. Choose the correct homophone: The wind will ___ the leaves.",
+    opts:["blew","blue","blow","bloo"],
+    ans:2
+  },
+  {
+    q:"6. Analogy: Dog is to Bark as Cat is to ___",
+    opts:["meow","roar","quack","neigh"],
+    ans:0
+  },
+  {
+    q:"7. Choose the correct homophone: I saw a ___ in the park.",
+    opts:["deer","dear","deer","dare"],
+    ans:0
+  },
+  {
+    q:"8. Analogy: Eye is to See as Ear is to ___",
+    opts:["hear","smell","taste","touch"],
+    ans:0
+  },
+  {
+    q:"9. Choose the correct homophone: She will ___ her homework later.",
+    opts:["do","due","dew","doo"],
+    ans:0
+  },
+  {
+    q:"10. Analogy: Sun is to Day as Moon is to ___",
+    opts:["night","morning","evening","dusk"],
+    ans:0
+  }
+];
 
-function calculateScore() {
-    const form = document.forms["quizForm"];
-    let score = 0;
-    let total = Object.keys(correctAnswers).length;
-    let details = [];
+let currentQuestion = 0;
+let selectedAnswers = Array(questions.length).fill(null);
 
-    for (let q in correctAnswers) {
-        let selected = form[q].value;
-        if (selected === correctAnswers[q]) {
-            score++;
-            details.push(`✅ Question ${q.slice(1)}: Correct`);
-        } else {
-            details.push(`❌ Question ${q.slice(1)}: Incorrect (Correct: ${correctAnswers[q]})`);
-        }
-    }
-
-    const percentage = Math.round((score / total) * 100);
-    const studentName = document.getElementById("studentName").value || "N/A";
-    const studentClass = document.getElementById("studentClass").value || "N/A";
-    const teacherName = document.getElementById("teacherName").value || "N/A";
-
-    let message = 
-    `👩‍🎓 Name: ${studentName}\n🏫 Class: ${studentClass}\n👨‍🏫 Teacher: ${teacherName}\n\n` +
-    `🎯 Score: ${score} / ${total} (${percentage}%)\n\n${details.join('\n')}`;
-
-    const resultDiv = document.getElementById("result");
-    resultDiv.innerText = message;
-    resultDiv.style.display = "block";
-    document.getElementById("pdfBtn").style.display = "inline-block";
+function renderQuestion(){
+  const quizEl = document.getElementById("quiz");
+  quizEl.innerHTML="";
+  const q = questions[currentQuestion];
+  const card = document.createElement("div");
+  card.className="q-card";
+  card.innerHTML=`
+    <div class="q-top">
+      <div class="q-num">${currentQuestion+1}</div>
+      <div class="q-text">${q.q}</div>
+    </div>
+    <div class="opts">
+      ${q.opts.map((opt,i)=>`<div class="opt ${selectedAnswers[currentQuestion]===i?'selected':''}" onclick="selectOption(${i})">${opt}</div>`).join("")}
+    </div>
+  `;
+  quizEl.appendChild(card);
+  document.getElementById("live-q").innerText=`Question ${currentQuestion+1} / ${questions.length}`;
+  document.getElementById("progress-bar").style.width=`${(currentQuestion+1)/questions.length*100}%`;
+  document.getElementById("prev-btn").disabled=currentQuestion===0;
+  document.getElementById("next-btn").disabled=currentQuestion===questions.length-1;
 }
 
-function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    let text = document.getElementById("result").innerText;
-    doc.text("Frosty Grammar Challenge — Homophones & Analogies", 10, 10);
-    doc.text(text, 10, 20);
-    doc.save("Frosty_Grammar_Results.pdf");
+function selectOption(i){
+  selectedAnswers[currentQuestion]=i;
+  renderQuestion();
 }
+
+function prevQuestion(){currentQuestion--; renderQuestion();}
+function nextQuestion(){currentQuestion++; renderQuestion();}
+
+function submitQuiz(){
+  let score = 0;
+  questions.forEach((q,i)=>{
+    if(selectedAnswers[i]===q.ans) score++;
+  });
+  document.getElementById("student-info-container").style.display="none";
+  document.getElementById("quiz-container").style.display="none";
+  document.getElementById("results-container").style.display="block";
+
+  const badge = document.getElementById("badge-display");
+  let title="", emoji="🏆";
+  if(score>=9){title="Excellent! 🎉";}
+  else if(score>=7){title="Very Good 😎";}
+  else if(score>=5){title="Good 🙂";}
+  else{title="Keep Practicing 😅";}
+  badge.querySelector(".title").innerText=title;
+  badge.querySelector(".emoji").innerText=emoji;
+
+  document.getElementById("score-display").innerText=`Score: ${score} / ${questions.length}`;
+  document.getElementById("name-display").innerText=document.getElementById("name").value;
+  document.getElementById("meta-display").innerText=`Roll: ${document.getElementById("roll").value} • Class: ${document.getElementById("class").value} • Section: ${document.getElementById("section").value}`;
+
+  // answers review
+  const review = document.getElementById("answers-review");
+  review.innerHTML="<h3>Answer Review</h3>";
+  questions.forEach((q,i)=>{
+    const sel = selectedAnswers[i];
+    const correct = q.ans;
+    const div = document.createElement("div");
+    div.style.marginBottom="6px";
+    div.innerHTML=`<strong>Q${i+1}:</strong> ${q.q} <br> Your answer: <span style="color:${sel===correct?'green':'red'}">${sel!==null?q.opts[sel]:"Not answered"}</span>, Correct answer: <strong>${q.opts[correct]}</strong>`;
+    review.appendChild(div);
+  });
+}
+
+document.getElementById("student-info-form").addEventListener("submit", e=>{
+  e.preventDefault();
+  document.getElementById("student-info-container").style.display="none";
+  document.getElementById("quiz-container").style.display="block";
+  renderQuestion();
+});
+
+function downloadPDF(){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text("Homophones & Analogies Quiz Result", 14, 20);
+  doc.setFontSize(12);
+  doc.text(`Name: ${document.getElementById("name").value}`,14,30);
+  doc.text(`Roll: ${document.getElementById("roll").value} • Class: ${document.getElementById("class").value} • Section: ${document.getElementById("section").value}`,14,38);
+  doc.text(document.getElementById("score-display").innerText,14,48);
+  let y=60;
+  questions.forEach((q,i)=>{
+    doc.text(`Q${i+1}: ${q.q}`,14,y); y+=6;
+    const sel = selectedAnswers[i];
+    const correct = q.ans;
+    doc.text(`Your answer: ${sel!==null?q.opts[sel]:"Not answered"} • Correct: ${q.opts[correct]}`,14,y); y+=8;
+    if(y>270){doc.addPage(); y=20;}
+  });
+  doc.save(`Quiz_Result_${document.getElementById("name").value}.pdf`);
+}
+
+// optional: snow animation
+const canvas = document.getElementById("snow-canvas");
+const ctx = canvas.getContext("2d");
+let W, H;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+window.addEventListener("resize",resize);
+resize();
+const flakes=[];
+for(let i=0;i<120;i++){flakes.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*4+1,d:Math.random()*1})}
+function draw(){ctx.clearRect(0,0,W,H);ctx.fillStyle="rgba(255,255,255,0.8)";ctx.beginPath();flakes.forEach(f=>{ctx.moveTo(f.x,f.y);ctx.arc(f.x,f.y,f.r,0,Math.PI*2,true)});ctx.fill();move();}
+function move(){flakes.forEach(f=>{f.y+=Math.pow(f.d,2)+1;f.x+=Math.sin(f.d)*2;if(f.y>H){f.y=0;f.x=Math.random()*W;}});requestAnimationFrame(draw);}
+draw();
 </script>
-
 </body>
 </html>
