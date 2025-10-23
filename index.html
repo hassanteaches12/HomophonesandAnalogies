@@ -7,7 +7,7 @@
 <style>
     body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #c7ecee, #dff9fb);
+        background: linear-gradient(135deg, #dff9fb, #c7ecee);
         color: #2f3640;
         margin: 0;
         padding: 0;
@@ -22,7 +22,7 @@
         box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .container {
-        max-width: 800px;
+        max-width: 850px;
         background: white;
         margin: 40px auto;
         padding: 30px;
@@ -32,6 +32,19 @@
     h2 {
         text-align: center;
         color: #0984e3;
+    }
+    .student-info {
+        margin-bottom: 25px;
+        background: #f1f2f6;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    .student-info input {
+        width: 48%;
+        padding: 8px;
+        margin: 5px 1%;
+        border: 1px solid #dcdde1;
+        border-radius: 6px;
     }
     .question {
         margin-bottom: 20px;
@@ -63,6 +76,7 @@
         background: #74b9ff;
     }
     #result {
+        display: none;
         margin-top: 30px;
         padding: 20px;
         border-radius: 10px;
@@ -74,6 +88,7 @@
     #pdfBtn {
         display: none;
         background: #6c5ce7;
+        margin-left: 10px;
     }
 </style>
 </head>
@@ -82,102 +97,122 @@
 <header>✨ Frosty Grammar Challenge — Homophones & Analogies!</header>
 
 <div class="container">
-<h2>📘 Quiz: Homophones & Analogies</h2>
+<h2>📘 Student Quiz</h2>
+
+<div class="student-info">
+    <label><b>Student Name:</b></label>
+    <input type="text" id="studentName" placeholder="Enter your full name" required>
+    <label><b>Class:</b></label>
+    <input type="text" id="studentClass" placeholder="e.g. Grade 5" required>
+    <label><b>Teacher:</b></label>
+    <input type="text" id="teacherName" placeholder="e.g. Mr. Hassan Abbas">
+</div>
 
 <form id="quizForm">
 
+<!-- Question 1 -->
 <div class="question">
 1. Which sentence uses the correct homophone?<br>
 <div class="options">
-<label><input type="radio" name="q1" value="A">A. They're going to the park.</label>
-<label><input type="radio" name="q1" value="B">B. Their going to the park.</label>
-<label><input type="radio" name="q1" value="C">C. There going to the park.</label>
+<label><input type="radio" name="q1" value="A"> A. They're going to the park.</label>
+<label><input type="radio" name="q1" value="B"> B. Their going to the park.</label>
+<label><input type="radio" name="q1" value="C"> C. There going to the park.</label>
 </div>
 </div>
 
+<!-- Question 2 -->
 <div class="question">
 2. Choose the correct word: I could not _____ the pain any longer.<br>
 <div class="options">
-<label><input type="radio" name="q2" value="A">A. bare</label>
-<label><input type="radio" name="q2" value="B">B. bear</label>
+<label><input type="radio" name="q2" value="A"> A. bare</label>
+<label><input type="radio" name="q2" value="B"> B. bear</label>
 </div>
 </div>
 
+<!-- Question 3 -->
 <div class="question">
 3. Identify the correct analogy: Cold is to Ice as Hot is to _____.<br>
 <div class="options">
-<label><input type="radio" name="q3" value="A">A. Fire</label>
-<label><input type="radio" name="q3" value="B">B. Warm</label>
-<label><input type="radio" name="q3" value="C">C. Summer</label>
+<label><input type="radio" name="q3" value="A"> A. Fire</label>
+<label><input type="radio" name="q3" value="B"> B. Warm</label>
+<label><input type="radio" name="q3" value="C"> C. Summer</label>
 </div>
 </div>
 
+<!-- Question 4 -->
 <div class="question">
 4. Which pair of words are homophones?<br>
 <div class="options">
-<label><input type="radio" name="q4" value="A">A. Flour – Flower</label>
-<label><input type="radio" name="q4" value="B">B. Blue – Blew</label>
-<label><input type="radio" name="q4" value="C">C. Both A and B</label>
+<label><input type="radio" name="q4" value="A"> A. Flour – Flower</label>
+<label><input type="radio" name="q4" value="B"> B. Blue – Blew</label>
+<label><input type="radio" name="q4" value="C"> C. Both A and B</label>
 </div>
 </div>
 
+<!-- Question 5 -->
 <div class="question">
 5. Choose the best analogy: Book is to Reading as Fork is to _____.<br>
 <div class="options">
-<label><input type="radio" name="q5" value="A">A. Drawing</label>
-<label><input type="radio" name="q5" value="B">B. Writing</label>
-<label><input type="radio" name="q5" value="C">C. Eating</label>
+<label><input type="radio" name="q5" value="A"> A. Drawing</label>
+<label><input type="radio" name="q5" value="B"> B. Writing</label>
+<label><input type="radio" name="q5" value="C"> C. Eating</label>
 </div>
 </div>
 
+<!-- Question 6 -->
 <div class="question">
-6. Fill in the blank with the correct homophone: The wind will _____ the leaves away.<br>
+6. Fill in the blank: The wind will _____ the leaves away.<br>
 <div class="options">
-<label><input type="radio" name="q6" value="A">A. blew</label>
-<label><input type="radio" name="q6" value="B">B. blue</label>
+<label><input type="radio" name="q6" value="A"> A. blew</label>
+<label><input type="radio" name="q6" value="B"> B. blue</label>
 </div>
 </div>
 
+<!-- Question 7 -->
 <div class="question">
 7. Which analogy is correct?<br>
 <div class="options">
-<label><input type="radio" name="q7" value="A">A. Teacher : School :: Doctor : Hospital</label>
-<label><input type="radio" name="q7" value="B">B. Teacher : Books :: Doctor : School</label>
+<label><input type="radio" name="q7" value="A"> A. Teacher : School :: Doctor : Hospital</label>
+<label><input type="radio" name="q7" value="B"> B. Teacher : Books :: Doctor : School</label>
 </div>
 </div>
 
+<!-- Question 8 -->
 <div class="question">
 8. Select the correct homophone: Please _____ quietly during the show.<br>
 <div class="options">
-<label><input type="radio" name="q8" value="A">A. sit</label>
-<label><input type="radio" name="q8" value="B">B. seat</label>
+<label><input type="radio" name="q8" value="A"> A. sit</label>
+<label><input type="radio" name="q8" value="B"> B. seat</label>
 </div>
 </div>
 
+<!-- Question 9 -->
 <div class="question">
 9. Choose the correct analogy: Eye is to See as Ear is to _____.<br>
 <div class="options">
-<label><input type="radio" name="q9" value="A">A. Hear</label>
-<label><input type="radio" name="q9" value="B">B. Listen</label>
-<label><input type="radio" name="q9" value="C">C. Sound</label>
+<label><input type="radio" name="q9" value="A"> A. Hear</label>
+<label><input type="radio" name="q9" value="B"> B. Listen</label>
+<label><input type="radio" name="q9" value="C"> C. Sound</label>
 </div>
 </div>
 
+<!-- Question 10 -->
 <div class="question">
 10. Pick the correct homophone: I will _____ the gift to my friend.<br>
 <div class="options">
-<label><input type="radio" name="q10" value="A">A. sent</label>
-<label><input type="radio" name="q10" value="B">B. scent</label>
-<label><input type="radio" name="q10" value="C">C. send</label>
+<label><input type="radio" name="q10" value="A"> A. sent</label>
+<label><input type="radio" name="q10" value="B"> B. scent</label>
+<label><input type="radio" name="q10" value="C"> C. send</label>
 </div>
 </div>
 
+<!-- Question 11 -->
 <div class="question">
 11. Choose the correct analogy: Pen is to Writer as Brush is to _____.<br>
 <div class="options">
-<label><input type="radio" name="q11" value="A">A. Artist</label>
-<label><input type="radio" name="q11" value="B">B. Painter</label>
-<label><input type="radio" name="q11" value="C">C. Designer</label>
+<label><input type="radio" name="q11" value="A"> A. Artist</label>
+<label><input type="radio" name="q11" value="B"> B. Painter</label>
+<label><input type="radio" name="q11" value="C"> C. Designer</label>
 </div>
 </div>
 
@@ -192,17 +227,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 const correctAnswers = {
-    q1: "A",
-    q2: "B",
-    q3: "A",
-    q4: "C",
-    q5: "C",
-    q6: "A",
-    q7: "A",
-    q8: "A",
-    q9: "A",
-    q10: "C",
-    q11: "B"
+    q1: "A", q2: "B", q3: "A", q4: "C", q5: "C", q6: "A",
+    q7: "A", q8: "A", q9: "A", q10: "C", q11: "B"
 };
 
 function calculateScore() {
@@ -222,9 +248,17 @@ function calculateScore() {
     }
 
     const percentage = Math.round((score / total) * 100);
-    let message = `🎉 You scored ${score} out of ${total} (${percentage}%)\n\n${details.join('\n')}`;
+    const studentName = document.getElementById("studentName").value || "N/A";
+    const studentClass = document.getElementById("studentClass").value || "N/A";
+    const teacherName = document.getElementById("teacherName").value || "N/A";
 
-    document.getElementById("result").innerText = message;
+    let message = 
+    `👩‍🎓 Name: ${studentName}\n🏫 Class: ${studentClass}\n👨‍🏫 Teacher: ${teacherName}\n\n` +
+    `🎯 Score: ${score} / ${total} (${percentage}%)\n\n${details.join('\n')}`;
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerText = message;
+    resultDiv.style.display = "block";
     document.getElementById("pdfBtn").style.display = "inline-block";
 }
 
